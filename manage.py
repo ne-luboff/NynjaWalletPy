@@ -7,15 +7,10 @@
 # Author: Liubov M. <liubov.mikhailova@gmail.com>
 
 import logging
-from optparse import OptionParser, OptionGroup
 import sys
-from tornado import ioloop
-import asyncio
-from app import NynjaWalletPyApi
+from run import start_server
 from environment import env
-
-from tornado.httpserver import HTTPServer
-
+from optparse import OptionParser, OptionGroup
 
 LOG_FORMAT = '[%(asctime)s] %(levelname)s [line:%(lineno)s] [%(funcName)s] %(message)s'
 logging.basicConfig(format=LOG_FORMAT)
@@ -24,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class ApiManager(object):
+
     def __init__(self, argv):
         parser = OptionParser(
             usage="manage.py [options] mode",
@@ -61,8 +57,6 @@ class ApiManager(object):
         """
         Runs server
         """
-        logger.debug('Starting API server...')
-
         # TODO fix it
         # daemon_mode = env.get('daemon', False)
         # if daemon_mode is True:
@@ -74,16 +68,7 @@ class ApiManager(object):
         #     ctx = DaemonContext(stdout=logfile, stderr=logfile, working_directory='.', pidfile=pid)
         #     ctx.open()
 
-        interface, port = env['listen'].split(':')
-
-        print(port)
-
-        asyncio.set_event_loop(asyncio.new_event_loop())
-
-        http_server = HTTPServer(NynjaWalletPyApi())
-        http_server.listen(int(port), interface)
-        logger.debug("Bind to %s:%s", interface, port)
-        ioloop.IOLoop.instance().start()
+        start_server()
 
 if __name__ == '__main__':
     ApiManager(sys.argv)

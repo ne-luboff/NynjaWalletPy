@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 #
-# Project name: NynjaWalletPy
-# File name: handlers.py
-# Created: 2017-07-11
+# Author: Roman Savchenko <r.sav4enko@gmail.com>
+# Created: 2016-02-23
 #
-# Author: Liubov M. <liubov.mikhailova@gmail.com>
+# Id: $Id$
+import datetime
 
-from base import ApiHandler
-from helpers import route
+from base import BaseHandler
 
 
-@route('')
-class IndexHandler(ApiHandler):
+class IndexHandler(BaseHandler):
     allowed_methods = ('GET', )
 
-    def read(self):
-        return {
-            'welcome_message': 'Hello!'
-        }
+    def get(self):
+        return self.success({
+            "current_time": datetime.datetime.now().isoformat()
+        })
