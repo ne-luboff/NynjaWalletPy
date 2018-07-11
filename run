@@ -1,0 +1,19 @@
+#!/bin/bash
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
+ROOT="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+VIRTENV=$ROOT/.env
+
+PIDFILE=$ROOT/pid
+
+if [ -f $PIDFILE ]
+then
+	kill `cat $PIDFILE`
+	rm -f $PIDFILE
+fi
+
+source $VIRTENV/bin/activate
+python $ROOT/manage.py -d run
+sleep 1
