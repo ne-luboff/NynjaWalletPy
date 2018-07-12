@@ -5,6 +5,7 @@
 # Created: 2018-07-11
 #
 # Author: Liubov M. <liubov.mikhailova@gmail.com>
+import json
 
 import logging
 import tornado
@@ -52,16 +53,38 @@ class BaseHandler(tornado.web.RequestHandler):
             return tornado.escape.json_decode(self.request.body)
         return None
 
-    def get_request_params(self, params):
+    @property
+    def request_query_params(self):
+        if self.request.arguments:
+            return tornado.escape.json_decode(json.dumps({k: self.get_argument(k) for k in self.request.arguments}))
+        return None
+
+    # def get_request_params(self, params):
+    #     """
+    #     Function to get request params and return dict with their values
+    #     """
+    #     results = dict()
+    #
+    #     for param in params:
+    #         res = None
+    #         if self.request_body and param in self.request_body:
+    #             res = self.request_body[param]
+    #         results[param] = res
+    #     return results
+
+    def get_request_params(self, params, query_param=False):
         """
         Function to get request params and return dict with their values
         """
+        data = self.request_body
+        if query_param:
+            data = self.request_query_params
         results = dict()
 
         for param in params:
             res = None
-            if self.request_body and param in self.request_body:
-                res = self.request_body[param]
+            if data and param in data:
+                res = data[param]
             results[param] = res
         return results
 

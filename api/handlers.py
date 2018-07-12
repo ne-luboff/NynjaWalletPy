@@ -7,17 +7,15 @@
 # Author: Liubov M. <liubov.mikhailova@gmail.com>
 
 import logging
-import random
-import string
+from api.example_data import put_wallet_response, put_wallet_history_response
 from base import BaseHandler
-from helpers import generate_random_string
 from static.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
 
 logger = logging.getLogger(__name__)
 
 
 class WalletHandler(BaseHandler):
-    allowed_methods = ('GET', 'PUT',)
+    allowed_methods = ('PUT', )
 
     def put(self):
         """
@@ -37,10 +35,30 @@ class WalletHandler(BaseHandler):
 
         # check is a string
         if not isinstance(required_params['password'], str):
-            return self.failure(message=INVALID_FIELD_FORMAT.format(INVALID_FIELD_FORMAT_DETAILS.format('password', 'string')))
+            return self.failure(message=INVALID_FIELD_FORMAT.format(INVALID_FIELD_FORMAT_DETAILS.format('password',
+                                                                                                        'string')))
 
-        # gen dummy response
-        address = generate_random_string(string.ascii_letters + string.digits, 32)
-        mnemonic_phrase = [generate_random_string(string.ascii_letters, random.randint(16, 32)) for x in range(0, 12)]
+        response = put_wallet_response()
+        return self.success(response)
 
-        return self.success({'address': address, 'mnemonic phrase': mnemonic_phrase})
+
+class WalletHistoryHandler(BaseHandler):
+    allowed_methods = ('GET', )
+
+    def get(self):
+        """
+        Get transfer history
+        """
+        logger.info("WalletHistory/Get: {0}".format(self.request.arguments))
+
+        required_param_names = ['address']
+        required_params = self.get_request_params(required_param_names, query_param=True)
+
+        # check for missing params
+        missed_param_names = self.missing_required_params(required_param_names, required_params)
+        if missed_param_names:
+            return self.failure(message=MISSED_REQUIRED_PARAMS.format(', '.join(missed_param_names)))
+
+        response = put_wallet_history_response(required_params['address'])
+
+        return self.success(response)
