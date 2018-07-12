@@ -24,6 +24,7 @@ class WalletHandler(BaseHandler):
         Create new wallet
         """
         logger.info("Wallet/Put: {0}".format(self.request_body))
+
         required_param_names = ['password']
         required_params = self.get_request_params(required_param_names)
 
