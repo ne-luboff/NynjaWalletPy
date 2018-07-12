@@ -13,26 +13,15 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 
 env = {
     'debug': True,
+    'api_key': '',
+    'api_pass': '',
     'cookie_secret': '',
     'password_salt': '',
     'daemon': False,
     'ssl': False,
-    'ws_ssl': False,
-    'listen': '0.0.0.0:8000',
-    'wslisten': '0.0.0.0:8888',
+    'port': '8000',
     'logfile': os.path.join(ROOT, 'NynjaWalletPy.log'),
     'pidfile': os.path.join(ROOT, 'pid'),
     'url_prefix': '',
-    'db': 'postgresql://localhost/NynjaWalletPy',
-    'site_url': 'http://localhost:8000/',
-    'static_url': 'http://localhost:8000/s/',
-    'static_path': os.path.join(ROOT, 'static'),
-    'serve_static': False,
-    'mail': {
-        'from': '',
-        'subject': 'NynjaWalletPy Password',
-        'server': '',
-        'login': '',
-        'password': ''
-    },
+    'serve_static': False
 }
