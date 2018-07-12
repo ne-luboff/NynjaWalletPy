@@ -1,0 +1,155 @@
+{
+	"variables": [],
+	"info": {
+		"name": "NynjaWalletPy",
+		"_postman_id": "28a48200-e66e-0925-4864-ef7d16c8e782",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create new wallet",
+			"request": {
+				"url": "18.185.116.64:8000/wallet",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\": \"newWalletPassword\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Check balance",
+			"request": {
+				"url": {
+					"raw": "18.185.116.64:8000/wallet/balance?address=walletAddress",
+					"host": [
+						"18",
+						"185",
+						"116",
+						"64"
+					],
+					"port": "8000",
+					"path": [
+						"wallet",
+						"balance"
+					],
+					"query": [
+						{
+							"key": "address",
+							"value": "walletAddress",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\": \"newWalletPassword\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer History",
+			"request": {
+				"url": {
+					"raw": "18.185.116.64:8000/wallet/history?address=walletAddress",
+					"host": [
+						"18",
+						"185",
+						"116",
+						"64"
+					],
+					"port": "8000",
+					"path": [
+						"wallet",
+						"history"
+					],
+					"query": [
+						{
+							"key": "address",
+							"value": "walletAddress",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\": \"newWalletPassword\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer Tokens",
+			"request": {
+				"url": "18.185.116.64:8000/transfer",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"address_from\": \"addressFrom\", \"address_to\": \"addressTo\", \"amount\": 1.23}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Mint",
+			"request": {
+				"url": "18.185.116.64:8000/mint",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"address\": \"addressFrom\", \"amount\": 1.23}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
