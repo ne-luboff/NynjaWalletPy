@@ -26,11 +26,13 @@ MarkupSafe==1.0
 pager==3.3
 parsimonious==0.8.0
 poyo==0.4.1
+py-geth==2.0.1
 pycryptodome==3.6.4
 python-daemon==2.1.2
 python-dateutil==2.7.3
 requests==2.19.1
 rlp==1.0.1
+semantic-version==2.6.0
 six==1.11.0
 toolz==0.9.0
 tornado==5.1
