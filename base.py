@@ -48,7 +48,9 @@ class BaseHandler(tornado.web.RequestHandler):
 
     @property
     def request_body(self):
-        return tornado.escape.json_decode(self.request.body)
+        if self.request.headers['Content-Type'] == 'application/json':
+            return tornado.escape.json_decode(self.request.body)
+        return None
 
     def get_request_params(self, params):
         """
