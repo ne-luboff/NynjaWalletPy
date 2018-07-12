@@ -25,7 +25,7 @@ def get_timestamp():
 
 
 def gen_balance():
-    return random.randint(0, 100)
+    return round(random.uniform(0, 100), 2)
 
 
 def rand_choice(preset_data):
@@ -61,3 +61,7 @@ def put_wallet_response():
 
 def put_wallet_history_response(address='Test'):
     return {"history": [gen_history_response_object(address) for i in range(0, random.randint(1, 10))]}
+
+
+def put_wallet_balance_response():
+    return {"amount": gen_balance()}
