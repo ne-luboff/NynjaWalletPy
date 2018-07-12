@@ -24,13 +24,15 @@ class BaseHandler(tornado.web.RequestHandler):
         }
 
         if data is not None:
-            response.update(data)
+            # response.update(data)
+            response = data
 
         logger.debug('Success: {0}'.format(response))
         self.write(response)
 
-    def failure(self, message=None, status=403):
-        self.write_error(self.failure_data(message, status))
+    def failure(self, message=None, status=400):
+        self.set_status(status)
+        self.write(self.failure_data(message, status))
 
     @staticmethod
     def failure_data(message, status):
@@ -43,6 +45,35 @@ class BaseHandler(tornado.web.RequestHandler):
 
         logger.debug('Error: {0}'.format(response))
         return response
+
+    @property
+    def request_body(self):
+        return tornado.escape.json_decode(self.request.body)
+
+    def get_request_params(self, params):
+        """
+        Function to get request params and return dict with their values
+        """
+        results = dict()
+
+        for param in params:
+            res = None
+            if self.request_body and param in self.request_body:
+                res = self.request_body[param]
+            results[param] = res
+        return results
+
+    def missing_required_params(self, expected_param_names, actual_params):
+        """
+        Check is required params missing. Return name of missing params
+        """
+        missing_param_names = list()
+        for expected_param_name in expected_param_names:
+            if actual_params[expected_param_name] != 0:
+                if not actual_params[expected_param_name]:
+                    missing_param_names.append(expected_param_name)
+
+        return missing_param_names
 
 
 class Default404Handler(BaseHandler):
