@@ -16,3 +16,8 @@ class IndexHandler(BaseHandler):
         return self.success({
             "current_time": datetime.datetime.now().isoformat()
         })
+
+    def put(self):
+        return self.failure({
+            "current_time": datetime.datetime.now().isoformat()
+        })
