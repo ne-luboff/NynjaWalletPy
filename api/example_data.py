@@ -63,5 +63,9 @@ def put_wallet_history_response(address='Test'):
     return {"history": [gen_history_response_object(address) for i in range(0, random.randint(1, 10))]}
 
 
-def put_wallet_balance_response():
+def get_wallet_balance_response():
     return {"amount": gen_balance()}
+
+
+def patch_transaction_response():
+    return {"hash_transaction": gen_wallet_address()}
