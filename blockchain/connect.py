@@ -13,7 +13,10 @@ NETWORK_NAME = 'rinkeby'
 ENDPOINT_TEMPLATE = 'https://{0}.infura.io/{1}'
 
 
-def connect():
+def network_connect():
+    """
+    Connect to blockchain network
+    """
     Endpoint = ENDPOINT_TEMPLATE.format(NETWORK_NAME, INFURA_KEY)
     web3 = Web3(Web3.HTTPProvider(Endpoint))
     return web3.version.node
