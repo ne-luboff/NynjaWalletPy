@@ -8,6 +8,7 @@
 
 import logging
 import sys
+from blockchain.connect import connect
 from run import start_server
 from environment import env
 from optparse import OptionParser, OptionGroup
@@ -57,18 +58,13 @@ class ApiManager(object):
         """
         Runs server
         """
-        # TODO fix it
-        # daemon_mode = env.get('daemon', False)
-        # if daemon_mode is True:
-        #     logfile = open(env['logfile'], 'a+')
-        #
-        #     from daemon import pidfile, DaemonContext
-        #     pid = pidfile.TimeoutPIDLockFile(env['pidfile'], 10)
-        #     logger.debug('Pidfile: %s', env['pidfile'])
-        #     ctx = DaemonContext(stdout=logfile, stderr=logfile, working_directory='.', pidfile=pid)
-        #     ctx.open()
-
         start_server()
+
+    def do_connect(self):
+        """
+        Connect to blockchain network
+        """
+        connect()
 
 if __name__ == '__main__':
     ApiManager(sys.argv)
