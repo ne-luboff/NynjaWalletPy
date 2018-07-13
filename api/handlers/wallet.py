@@ -9,6 +9,7 @@ import logging
 from api.example_data import get_wallet_balance_response, put_wallet_response
 
 from base import BaseHandler
+from blockchain.connect import get_connection
 from static.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
 
 logger = logging.getLogger(__name__)
@@ -38,7 +39,11 @@ class WalletHandler(BaseHandler):
             return self.failure(message=INVALID_FIELD_FORMAT.format(INVALID_FIELD_FORMAT_DETAILS.format('password',
                                                                                                         'string')))
 
+        w3 = get_connection()
+
+
         response = put_wallet_response()
+
         return self.success(response)
 
 
