@@ -9,7 +9,7 @@ cookiejar==0.0.2
 cytoolz==0.9.0.1
 docutils==0.14
 eth-abi==1.1.1
-eth-account==0.2.3
+eth-account==im0.2.3
 eth-hash==0.1.4
 eth-keyfile==0.5.1
 eth-keys==0.2.0b3

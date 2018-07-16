@@ -5,11 +5,12 @@
 # Created: 2018-07-12
 #
 # Author: Liubov M. <liubov.mikhailova@gmail.com>
-import logging
-from api.example_data import get_wallet_balance_response, put_wallet_response
 
+import logging
+from api.example_data import get_wallet_balance_response
 from base import BaseHandler
-from blockchain.connect import get_connection
+from eth_account import Account
+from blockchain.helpers import gen_mnemonic_phrase
 from static.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
 
 logger = logging.getLogger(__name__)
@@ -32,17 +33,19 @@ class WalletHandler(BaseHandler):
         if missed_param_names:
             return self.failure(message=MISSED_REQUIRED_PARAMS.format(', '.join(missed_param_names)))
 
-        print(required_params['password'])
-
         # check is a string
         if not isinstance(required_params['password'], str):
             return self.failure(message=INVALID_FIELD_FORMAT.format(INVALID_FIELD_FORMAT_DETAILS.format('password',
                                                                                                         'string')))
 
-        w3 = get_connection()
+        # create new account
+        acc = Account.create(required_params['password'])
 
-
-        response = put_wallet_response()
+        response = {
+            'address': acc.address,
+            'private_key': acc.privateKey.hex(),
+            'mnemonic_phrase': gen_mnemonic_phrase()
+        }
 
         return self.success(response)
 
