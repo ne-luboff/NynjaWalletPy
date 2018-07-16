@@ -9,11 +9,11 @@ import random
 
 import string
 import time
-from helpers import generate_random_string
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Helpers
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+from helpers.helper import generate_random_string
 
 
 def gen_wallet_address():

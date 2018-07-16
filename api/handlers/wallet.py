@@ -7,13 +7,12 @@
 # Author: Liubov M. <liubov.mikhailova@gmail.com>
 
 import logging
-from api.example_data import get_wallet_balance_response
 from base import BaseHandler
 from eth_account import Account
-from blockchain.connect import get_connection
 from blockchain.helpers import gen_mnemonic_phrase
-from static.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS, \
-    INVALID_WALLET_ADDRESS
+from helpers.http_helper import get_request
+from static.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
+from static.global_variables import GET_ACC_BALANCE
 
 logger = logging.getLogger(__name__)
 
@@ -69,13 +68,12 @@ class WalletBalanceHandler(BaseHandler):
         if missed_param_names:
             return self.failure(message=MISSED_REQUIRED_PARAMS.format(', '.join(missed_param_names)))
 
-        w3 = get_connection()
-        try:
-            balance = w3.eth.getBalance(required_params['address'])
-        except Exception as E:
-            logger.info("WalletBalance/Get.Error: {0}".format(E))
-            return self.failure(message=INVALID_WALLET_ADDRESS)
+        get_balance_response = get_request(GET_ACC_BALANCE.format(required_params['address']))
+        if get_balance_response['message'] == "NOTOK":
+            return self.failure(message=get_balance_response['result'])
 
-        return self.success({
-            'amount': balance
-        })
+        response = {
+            'amount': get_balance_response['result']
+        }
+
+        return self.success(response)
