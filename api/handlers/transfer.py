@@ -10,6 +10,8 @@ import json
 import logging
 from api.example_data import patch_transaction_response
 from base import BaseHandler
+from blockchain.connect import get_connection
+from blockchain.helpers import checksum
 from helpers.http_helper import get_request
 from static.global_string import MISSED_REQUIRED_PARAMS, SMTH_WENT_WRONG
 from static.global_variables import ASK_ROPSTEN_COINS
@@ -34,7 +36,34 @@ class TransferHandler(BaseHandler):
         if missed_param_names:
             return self.failure(message=MISSED_REQUIRED_PARAMS.format(', '.join(missed_param_names)))
 
-        response = patch_transaction_response()
+        key_hex = 'f56d530479dda6cb2a3882f10fc292c30167fcc8a4a6bae39981b63d5f875c04'
+
+        w3 = get_connection()
+
+        transaction = {
+            'gasPrice': w3.eth.gasPrice,
+            'value': required_params['amount'],
+            'to': checksum(required_params['address_to']),
+            'nonce': w3.eth.getTransactionCount(checksum(required_params['address_from']))
+        }
+
+        gas_estimate = w3.eth.estimateGas(transaction)
+        transaction['gas'] = gas_estimate
+
+        key = bytearray.fromhex(key_hex)
+
+        signed = w3.eth.account.signTransaction(transaction, key)
+        print(signed.rawTransaction)
+
+        try:
+            hash_transaction = w3.eth.sendRawTransaction(signed.rawTransaction)
+        except Exception as E:
+            logger.info("{0}".format(E))
+            return self.failure(message=str(E))
+
+        response = {
+            'hash_transaction': hash_transaction
+        }
 
         return self.success(response)
 
