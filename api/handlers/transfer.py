@@ -15,6 +15,9 @@ from blockchain.helpers import checksum
 from helpers.http_helper import get_request
 from static.global_string import MISSED_REQUIRED_PARAMS, SMTH_WENT_WRONG
 from static.global_variables import ASK_ROPSTEN_COINS
+from web3 import Web3
+from eth_account import Account
+
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +31,7 @@ class TransferHandler(BaseHandler):
         """
         logger.info("WalletTransfer/Patch: {0}".format(self.request_body))
 
-        required_param_names = ['address_from', 'address_to', 'amount']
+        required_param_names = ['address_to', 'amount', 'private_key']
         required_params = self.get_request_params(required_param_names)
 
         # check for missing params
@@ -36,38 +39,21 @@ class TransferHandler(BaseHandler):
         if missed_param_names:
             return self.failure(message=MISSED_REQUIRED_PARAMS.format(', '.join(missed_param_names)))
 
-        key_hex = 'f56d530479dda6cb2a3882f10fc292c30167fcc8a4a6bae39981b63d5f875c04'
-
-        # get addr by private key
-        # >>> bin  = b'K\x9c\x88%\x9f\xd9\x0b\xf6\xd2w}\x04yt\x9b\x1eg\x88\x8dPL\xe7c?\x98\x03wZ(\xc6\x89\x7f'
-        # >>> acct = Account.privateKeyToAccount(bin)
-        # >>> ether_address = acct.address
-        # >>> ether_address
-        # '0xff9afe43b67Ace754Bd87bC1d19bEbD3C818471F'
-
-        # Also
-        # >>> Web3.toHex(bin)
-        # '0x4b9c88259fd90bf6d2777d0479749b1e67888d504ce7633f9803775a28c6897f'
-        # >>> Web3.toBytes(hexstr='0x4b9c88259fd90bf6d2777d0479749b1e67888d504ce7633f9803775a28c6897f')
-        # b'K\x9c\x88%\x9f\xd9\x0b\xf6\xd2w}\x04yt\x9b\x1eg\x88\x8dPL\xe7c?\x98\x03wZ(\xc6\x89\x7f'
-
-
         w3 = get_connection()
+
+        addr_from = Account.privateKeyToAccount(Web3.toBytes(hexstr=required_params['private_key'])).address
 
         transaction = {
             'gasPrice': w3.eth.gasPrice,
             'value': required_params['amount'],
             'to': checksum(required_params['address_to']),
-            'nonce': w3.eth.getTransactionCount(checksum(required_params['address_from']))
+            'nonce': w3.eth.getTransactionCount(checksum(addr_from))
         }
 
         gas_estimate = w3.eth.estimateGas(transaction)
         transaction['gas'] = gas_estimate
-
-        key = bytearray.fromhex(key_hex)
-
-        signed = w3.eth.account.signTransaction(transaction, key)
-        print(signed.rawTransaction)
+        logger.info("WalletTransfer.Transaction: {0}".format(transaction))
+        signed = w3.eth.account.signTransaction(transaction, required_params['private_key'])
 
         try:
             hash_transaction = w3.eth.sendRawTransaction(signed.rawTransaction)
