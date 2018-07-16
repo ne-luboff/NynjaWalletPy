@@ -11,4 +11,4 @@ INVALID_FIELD_FORMAT = 'Invalid input data. {0}'
 
 INVALID_FIELD_FORMAT_DETAILS = 'Field name: {0}, expected format: {1}'
 
-INVALID_WALLET_ADDRESS = 'Invalid wallet address'
+SMTH_WENT_WRONG = 'Something Went Wrong. Please, check input params'
