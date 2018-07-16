@@ -10,8 +10,10 @@ import logging
 from api.example_data import get_wallet_balance_response
 from base import BaseHandler
 from eth_account import Account
+from blockchain.connect import get_connection
 from blockchain.helpers import gen_mnemonic_phrase
-from static.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
+from static.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS, \
+    INVALID_WALLET_ADDRESS
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +69,13 @@ class WalletBalanceHandler(BaseHandler):
         if missed_param_names:
             return self.failure(message=MISSED_REQUIRED_PARAMS.format(', '.join(missed_param_names)))
 
-        response = get_wallet_balance_response()
+        w3 = get_connection()
+        try:
+            balance = w3.eth.getBalance(required_params['address'])
+        except Exception as E:
+            logger.info("WalletBalance/Get.Error: {0}".format(E))
+            return self.failure(message=INVALID_WALLET_ADDRESS)
 
-        return self.success(response)
+        return self.success({
+            'amount': balance
+        })

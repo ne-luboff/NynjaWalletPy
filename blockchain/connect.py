@@ -24,7 +24,6 @@ def connect_to_blockchain():
     Endpoint = ENDPOINT_TEMPLATE.format(NETWORK_NAME, INFURA_KEY)
     w3 = Web3(Web3.HTTPProvider(Endpoint))
     w3.middleware_stack.inject(geth_poa_middleware, layer=0)
-    # print(w3.version.node)
     global rinkeby_connection
     rinkeby_connection = w3
     return rinkeby_connection
