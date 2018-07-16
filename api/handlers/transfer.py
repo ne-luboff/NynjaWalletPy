@@ -38,6 +38,20 @@ class TransferHandler(BaseHandler):
 
         key_hex = 'f56d530479dda6cb2a3882f10fc292c30167fcc8a4a6bae39981b63d5f875c04'
 
+        # get addr by private key
+        # >>> bin  = b'K\x9c\x88%\x9f\xd9\x0b\xf6\xd2w}\x04yt\x9b\x1eg\x88\x8dPL\xe7c?\x98\x03wZ(\xc6\x89\x7f'
+        # >>> acct = Account.privateKeyToAccount(bin)
+        # >>> ether_address = acct.address
+        # >>> ether_address
+        # '0xff9afe43b67Ace754Bd87bC1d19bEbD3C818471F'
+
+        # Also
+        # >>> Web3.toHex(bin)
+        # '0x4b9c88259fd90bf6d2777d0479749b1e67888d504ce7633f9803775a28c6897f'
+        # >>> Web3.toBytes(hexstr='0x4b9c88259fd90bf6d2777d0479749b1e67888d504ce7633f9803775a28c6897f')
+        # b'K\x9c\x88%\x9f\xd9\x0b\xf6\xd2w}\x04yt\x9b\x1eg\x88\x8dPL\xe7c?\x98\x03wZ(\xc6\x89\x7f'
+
+
         w3 = get_connection()
 
         transaction = {

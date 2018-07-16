@@ -13,6 +13,7 @@ from blockchain.helpers import gen_mnemonic_phrase
 from helpers.http_helper import get_request
 from static.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
 from static.global_variables import GET_ACC_BALANCE
+from web3 import Web3
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,7 @@ class WalletHandler(BaseHandler):
 
         response = {
             'address': acc.address,
-            'private_key': acc.privateKey.hex(),
+            'private_key': Web3.toHex(acc.privateKey),
             'mnemonic_phrase': gen_mnemonic_phrase()
         }
 
