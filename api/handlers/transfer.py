@@ -56,7 +56,7 @@ class TransferHandler(BaseHandler):
         signed = w3.eth.account.signTransaction(transaction, required_params['private_key'])
 
         try:
-            hash_transaction = w3.eth.sendRawTransaction(signed.rawTransaction)
+            hash_transaction = Web3.toHex(w3.eth.sendRawTransaction(signed.rawTransaction))
         except Exception as E:
             logger.info("{0}".format(E))
             return self.failure(message=str(E))

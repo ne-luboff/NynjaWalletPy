@@ -11,8 +11,8 @@ from web3.middleware import geth_poa_middleware
 
 INFURA_KEY = 'oktMAwsvSx2C8gaSg2mg'
 NETWORK_NAME = 'rinkeby'
-# ENDPOINT_TEMPLATE = 'https://{0}.infura.io/{1}'
-ENDPOINT_TEMPLATE = 'https://rinkeby.infura.io/oktMAwsvSx2C8gaSg2mg'
+ENDPOINT_TEMPLATE = 'https://{0}.infura.io/{1}'
+# ENDPOINT_TEMPLATE = 'https://rinkeby.infura.io/oktMAwsvSx2C8gaSg2mg'
 
 rinkeby_connection = None
 
