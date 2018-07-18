@@ -10,8 +10,8 @@ import logging
 from api.example_data import put_wallet_history_response
 from base import BaseHandler
 from helpers.http_helper import get_request
-from static.global_string import MISSED_REQUIRED_PARAMS
-from static.global_variables import GET_ACC_TRANSFER_HISTORY
+from static_vars.global_string import MISSED_REQUIRED_PARAMS
+from static_vars.global_variables import GET_ACC_TRANSFER_HISTORY
 
 logger = logging.getLogger(__name__)
 

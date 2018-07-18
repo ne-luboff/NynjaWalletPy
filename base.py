@@ -8,12 +8,20 @@
 import json
 
 import logging
+import os
 import tornado
 
 logger = logging.getLogger(__name__)
 
 
 class BaseHandler(tornado.web.RequestHandler):
+
+    def render_html(self, path):
+        # make path absolute
+        abs_path = os.path.abspath("templates/{0}".format(path))
+        with open(abs_path, 'r') as jsfile:
+            script = jsfile.read()
+        self.write(script)
 
     def write_error(self, status_code, **kwargs):
         self.set_status(status_code)

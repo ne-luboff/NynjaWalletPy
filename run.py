@@ -30,7 +30,12 @@ def start_server():
         ctx = DaemonContext(stdout=logfile, stderr=logfile, working_directory='.', pidfile=pid)
         ctx.open()
 
-    app = tornado.web.Application(get_router(), default_handler_class=Default404Handler)
+    api_handlers = get_router()
+    static_handlers = []
+    static_handlers.append((r'/static/(.*)', tornado.web.StaticFileHandler, {'path': 'static'})),
+
+    handlers = api_handlers + static_handlers
+    app = tornado.web.Application(handlers, default_handler_class=Default404Handler)
     port = env['port']
     logger.debug('Starting API server at %s' % port)
     app.listen(port)

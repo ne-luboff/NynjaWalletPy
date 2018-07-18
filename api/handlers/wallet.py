@@ -11,8 +11,8 @@ from base import BaseHandler
 from eth_account import Account
 from blockchain.helpers import gen_mnemonic_phrase
 from helpers.http_helper import get_request
-from static.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
-from static.global_variables import GET_ACC_BALANCE
+from static_vars.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
+from static_vars.global_variables import GET_ACC_BALANCE
 from web3 import Web3
 
 logger = logging.getLogger(__name__)
@@ -78,3 +78,15 @@ class WalletBalanceHandler(BaseHandler):
         }
 
         return self.success(response)
+
+
+class GenWalletHandler(BaseHandler):
+    allowed_methods = ('GET', )
+
+    def get(self):
+        """
+        Render http page with wallet
+        """
+        logger.info("Wallet/Gen")
+
+        return self.render_html('test.html')

@@ -8,7 +8,7 @@
 
 from api.handlers.history import WalletHistoryHandler
 from api.handlers.transfer import TransferHandler, MintHandler
-from api.handlers.wallet import WalletHandler, WalletBalanceHandler
+from api.handlers.wallet import WalletHandler, WalletBalanceHandler, GenWalletHandler
 from handlers import IndexHandler
 
 
@@ -20,4 +20,5 @@ def get_router():
         (r"/wallet/history", WalletHistoryHandler),
         (r"/transfer", TransferHandler),
         (r"/mint", MintHandler),
+        (r"/gen", GenWalletHandler)
     ]

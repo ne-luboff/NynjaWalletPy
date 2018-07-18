@@ -13,8 +13,8 @@ from base import BaseHandler
 from blockchain.connect import get_connection
 from blockchain.helpers import checksum
 from helpers.http_helper import get_request
-from static.global_string import MISSED_REQUIRED_PARAMS, SMTH_WENT_WRONG
-from static.global_variables import ASK_ROPSTEN_COINS
+from static_vars.global_string import MISSED_REQUIRED_PARAMS, SMTH_WENT_WRONG
+from static_vars.global_variables import ASK_ROPSTEN_COINS
 from web3 import Web3
 from eth_account import Account
 

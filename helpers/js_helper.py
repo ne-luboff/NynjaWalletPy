@@ -11,7 +11,7 @@ import os
 
 
 def test():
-    path_to_script = os.path.abspath("js/test.js")
+    path_to_script = os.path.abspath("js_scripts/test.js_scripts")
     with open(path_to_script, 'r') as jsfile:
         script = jsfile.read()
     print(script)
