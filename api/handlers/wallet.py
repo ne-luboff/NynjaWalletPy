@@ -46,7 +46,7 @@ class WalletHandler(BaseHandler):
         response = {
             'address': acc.address,
             'private_key': Web3.toHex(acc.privateKey),
-            'mnemonic_phrase': gen_mnemonic_phrase()
+            'mnemonic_phrase': gen_mnemonic_phrase(acc.privateKey)
         }
 
         return self.success(response)
