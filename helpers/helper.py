@@ -29,8 +29,8 @@ def generate_random_string(allowed_symbols=None, length=16):
     return ''.join(random.choice(allowed_symbols) for _ in range(length))
 
 
-def get_wallet_data():
-    url = "http://127.0.0.1:8888/gen"
+def get_wallet_data(password=None):
+    url = "http://127.0.0.1:8888/gen?p={0}".format(password)
     driver_name = "chromedriver_linux_64"
 
     if platform.system() == 'Darwin':

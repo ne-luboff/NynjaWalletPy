@@ -5,17 +5,14 @@
 # Created: 2018-07-12
 #
 # Author: Liubov M. <liubov.mikhailova@gmail.com>
+import json
 
 import logging
-import time
 from base import BaseHandler
-from eth_account import Account
-from blockchain.helpers import gen_mnemonic_phrase
-from environment import env
+from helpers.helper import get_wallet_data
 from helpers.http_helper import get_request
 from static_vars.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
 from static_vars.global_variables import GET_ACC_BALANCE
-from web3 import Web3
 
 logger = logging.getLogger(__name__)
 
@@ -43,12 +40,20 @@ class WalletHandler(BaseHandler):
                                                                                                         'string')))
 
         # create new account
-        acc = Account.create(required_params['password'])
+        # acc = Account.create(required_params['password'])
+
+        data = get_wallet_data(required_params['password'])
+        print(data)
+        print(type(data))
+        if not data:
+            self.failure()
+
+        data_js = json.loads(data)
 
         response = {
-            'address': acc.address,
-            'private_key': Web3.toHex(acc.privateKey),
-            'mnemonic_phrase': gen_mnemonic_phrase(acc.privateKey)
+            'address': "0x{0}".format(data_js["address"]),
+            'private_key': "0x{0}".format(data_js["privateKey"]),
+            'mnemonic_phrase': data_js["seed"].split(" ")
         }
 
         return self.success(response)
@@ -80,52 +85,3 @@ class WalletBalanceHandler(BaseHandler):
         }
 
         return self.success(response)
-
-
-class GenWalletHandler(BaseHandler):
-    allowed_methods = ('GET', )
-
-    def get(self):
-        """
-        Render http page with wallet
-        """
-        logger.info("Wallet/Gen")
-
-        # from tornado import template
-        #
-        # print(template.Template('index.html').generate())
-
-        return self.render_html('index.html')
-
-
-class GetWalletHandler(BaseHandler):
-    allowed_methods = ('GET', )
-
-    def get(self):
-        logger.info("Wallet/Get")
-
-        # url = "http://{0}:8000/".format(env['server_api'])
-        # print (url)
-        # url = "http://18.237.94.157:8888/test"
-        url = "http://127.0.0.1:8888/gen"
-        # url = "http://google.com"
-
-        # end = globals()['server_ip']
-        # print(end)
-
-        # import urllib.request
-        # sock1 = urllib.request.urlopen(url)
-        # time.sleep(15)
-        # sock = sock1.read()
-        # print(sock)
-        from requests_html import HTMLSession
-        session = HTMLSession()
-        r = session.get(url)
-
-        print(r.html.render())
-
-        # from tornado import template
-        #
-        # print(template.Template('index.html').generate())
-
-        return self.failure()

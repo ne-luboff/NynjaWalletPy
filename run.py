@@ -40,6 +40,6 @@ def start_server():
     logger.debug('Starting API server at %s' % port)
     app.listen(port)
 
-    global server_ip
-    server_ip = get_server_ip()
+    # global server_ip
+    # server_ip = get_server_ip()
     tornado.ioloop.IOLoop.current().start()
