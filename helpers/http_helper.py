@@ -20,5 +20,11 @@ def get_request(endpoint):
     print(response)
     print(response.status_code)
     print(requests.codes.ok)
-    print(response.json())
-    pass
+    print(response.text)
+    return
+
+
+def get_server_ip():
+    endpoint = "http://checkip.amazonaws.com/"
+    response = requests.get(endpoint)
+    return response.text.strip()

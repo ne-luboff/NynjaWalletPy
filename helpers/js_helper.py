@@ -11,7 +11,7 @@ import os
 
 
 def test():
-    path_to_script = os.path.abspath("js_scripts/test.js_scripts")
+    path_to_script = os.path.abspath("js_scripts/test.js")
     with open(path_to_script, 'r') as jsfile:
         script = jsfile.read()
     print(script)
@@ -19,5 +19,17 @@ def test():
     ctx = execjs.compile(script)
     return ctx.call("add", 1, 2)
 
+
+def test2():
+    # path_to_script = os.path.abspath("js_scripts/lightwallet2.js")
+    # path_to_script = os.path.abspath("js_scripts/j3.js")
+    path_to_script = os.path.abspath("js_scripts/wallet.js")
+    with open(path_to_script, 'r') as jsfile:
+        script = jsfile.read()
+    # print(script)
+    print("----")
+    ctx = execjs.compile(script)
+    return ctx.call("walletInit")
+
 if __name__ == "__main__":
-    print(test())
+    print(test2())

@@ -13,10 +13,10 @@ import tornado.web
 from base import Default404Handler
 
 from environment import env
+from helpers.http_helper import get_server_ip
 from router import get_router
 
 logger = logging.getLogger(__name__)
-
 
 def start_server():
     # check is it daemon
@@ -39,4 +39,7 @@ def start_server():
     port = env['port']
     logger.debug('Starting API server at %s' % port)
     app.listen(port)
+
+    global server_ip
+    server_ip = get_server_ip()
     tornado.ioloop.IOLoop.current().start()

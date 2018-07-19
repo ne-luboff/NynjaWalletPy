@@ -10,6 +10,7 @@ import logging
 from base import BaseHandler
 from eth_account import Account
 from blockchain.helpers import gen_mnemonic_phrase
+from environment import env
 from helpers.http_helper import get_request
 from static_vars.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
 from static_vars.global_variables import GET_ACC_BALANCE
@@ -89,4 +90,33 @@ class GenWalletHandler(BaseHandler):
         """
         logger.info("Wallet/Gen")
 
-        return self.render_html('test.html')
+        # from tornado import template
+        #
+        # print(template.Template('index.html').generate())
+
+        return self.render_html('index.html')
+
+
+class GetWalletHandler(BaseHandler):
+    allowed_methods = ('GET', )
+
+    def get(self):
+        logger.info("Wallet/Get")
+
+        # url = "http://{0}:8000/".format(env['server_api'])
+        # print (url)
+        url = "http://18.237.94.157:8888/test"
+        # url = "http://google.com"
+
+        # end = globals()['server_ip']
+        # print(end)
+
+        import urllib.request
+        sock = urllib.request.urlopen(url).read()
+        print(sock)
+
+        # from tornado import template
+        #
+        # print(template.Template('index.html').generate())
+
+        return self.failure()
