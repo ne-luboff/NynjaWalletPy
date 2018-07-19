@@ -7,6 +7,7 @@
 # Author: Liubov M. <liubov.mikhailova@gmail.com>
 
 import logging
+import time
 from base import BaseHandler
 from eth_account import Account
 from blockchain.helpers import gen_mnemonic_phrase
@@ -105,15 +106,23 @@ class GetWalletHandler(BaseHandler):
 
         # url = "http://{0}:8000/".format(env['server_api'])
         # print (url)
-        url = "http://18.237.94.157:8888/test"
+        # url = "http://18.237.94.157:8888/test"
+        url = "http://127.0.0.1:8888/gen"
         # url = "http://google.com"
 
         # end = globals()['server_ip']
         # print(end)
 
-        import urllib.request
-        sock = urllib.request.urlopen(url).read()
-        print(sock)
+        # import urllib.request
+        # sock1 = urllib.request.urlopen(url)
+        # time.sleep(15)
+        # sock = sock1.read()
+        # print(sock)
+        from requests_html import HTMLSession
+        session = HTMLSession()
+        r = session.get(url)
+
+        print(r.html.render())
 
         # from tornado import template
         #
