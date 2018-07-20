@@ -12,7 +12,7 @@ from api.handlers.wallet import WalletHandler, WalletBalanceHandler
 from handlers import IndexHandler
 
 
-def get_router():
+def api_handlers():
     return [
         (r"/", IndexHandler),
         (r"/wallet", WalletHandler),

@@ -8,7 +8,6 @@
 import json
 
 import logging
-from api.example_data import patch_transaction_response
 from base import BaseHandler
 from blockchain.connect import get_connection
 from blockchain.helpers import checksum
@@ -88,8 +87,7 @@ class MintHandler(BaseHandler):
         # check faucet address
         # ask faucet address
         ask_for_coins_response = get_request(ASK_ROPSTEN_COINS.format(required_params['address']))
-        print(ask_for_coins_response)
-        print(type(ask_for_coins_response))
+        logger.info("MintResponse: {0}".format(ask_for_coins_response))
         if ask_for_coins_response.get("statusCode", 200) != 200:
             error_msg = SMTH_WENT_WRONG
             try:

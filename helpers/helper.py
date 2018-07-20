@@ -13,7 +13,7 @@ import string
 import platform
 from selenium import webdriver
 import time
-from helpers.http_helper import get_request, post_request
+from helpers.http_helper import post_request
 
 logger = logging.getLogger(__name__)
 

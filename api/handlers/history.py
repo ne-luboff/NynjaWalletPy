@@ -7,7 +7,6 @@
 # Author: Liubov M. <liubov.mikhailova@gmail.com>
 
 import logging
-from api.example_data import put_wallet_history_response
 from base import BaseHandler
 from helpers.http_helper import get_request
 from static_vars.global_string import MISSED_REQUIRED_PARAMS

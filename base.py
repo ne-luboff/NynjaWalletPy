@@ -67,19 +67,6 @@ class BaseHandler(tornado.web.RequestHandler):
             return tornado.escape.json_decode(json.dumps({k: self.get_argument(k) for k in self.request.arguments}))
         return None
 
-    # def get_request_params(self, params):
-    #     """
-    #     Function to get request params and return dict with their values
-    #     """
-    #     results = dict()
-    #
-    #     for param in params:
-    #         res = None
-    #         if self.request_body and param in self.request_body:
-    #             res = self.request_body[param]
-    #         results[param] = res
-    #     return results
-
     def get_request_params(self, params, query_param=False):
         """
         Function to get request params and return dict with their values
