@@ -5,11 +5,10 @@
 # Created: 2018-07-12
 #
 # Author: Liubov M. <liubov.mikhailova@gmail.com>
-import json
 
 import logging
 from base import BaseHandler
-from helpers.helper import get_wallet_data
+from helpers.helper import get_wallet_data_js_server, to_hex_data
 from helpers.http_helper import get_request
 from static_vars.global_string import MISSED_REQUIRED_PARAMS, INVALID_FIELD_FORMAT, INVALID_FIELD_FORMAT_DETAILS
 from static_vars.global_variables import GET_ACC_BALANCE
@@ -39,21 +38,14 @@ class WalletHandler(BaseHandler):
             return self.failure(message=INVALID_FIELD_FORMAT.format(INVALID_FIELD_FORMAT_DETAILS.format('password',
                                                                                                         'string')))
 
-        # create new account
-        # acc = Account.create(required_params['password'])
-
-        data = get_wallet_data(required_params['password'])
-        print(data)
-        print(type(data))
+        data = get_wallet_data_js_server(required_params['password'])
         if not data:
             self.failure()
 
-        data_js = json.loads(data)
-
         response = {
-            'address': "0x{0}".format(data_js["address"]),
-            'private_key': "0x{0}".format(data_js["privateKey"]),
-            'mnemonic_phrase': data_js["seed"].split(" ")
+            'address': to_hex_data(data["address"]),
+            'private_key': to_hex_data(data["privateKey"]),
+            'mnemonic_phrase': data["seed"].split(" ")
         }
 
         return self.success(response)

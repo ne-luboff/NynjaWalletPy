@@ -13,8 +13,10 @@ import string
 import platform
 from selenium import webdriver
 import time
+from helpers.http_helper import get_request, post_request
 
 logger = logging.getLogger(__name__)
+
 
 def generate_random_string(allowed_symbols=None, length=16):
     """
@@ -29,7 +31,7 @@ def generate_random_string(allowed_symbols=None, length=16):
     return ''.join(random.choice(allowed_symbols) for _ in range(length))
 
 
-def get_wallet_data(password=None):
+def get_wallet_data_selenium(password=None):
     url = "http://127.0.0.1:8888/gen?p={0}".format(password)
     driver_name = "chromedriver_linux_64"
 
@@ -48,3 +50,22 @@ def get_wallet_data(password=None):
         logger.info("GenWalletError: {0}".format(str(E)))
 
     return None
+
+
+def to_hex_data(data):
+    if data.startswith("0x"):
+        return data
+    return "0x{0}".format(data)
+
+
+def get_wallet_data_js_server(password="test"):
+    """
+    Get generated with lightwallet.js wallet data (address, private_key, mnemonic_phrase) from js server
+    """
+    url = "https://fierce-bayou-70383.herokuapp.com/"
+    # prepare data
+    data = {"password": password}
+    headers = {
+        "Content-Type": "application/json"
+    }
+    return post_request(url, data, headers)
