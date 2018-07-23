@@ -125,7 +125,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"address_from\": \"addressFrom\", \"address_to\": \"addressTo\", \"amount\": 1.23}"
+					"raw": "{\"private_key\": \"fromPrivateKey\", \"address_to\": \"addressTo\", \"amount\": 1}"
 				},
 				"description": ""
 			},
@@ -145,7 +145,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"address\": \"addressFrom\", \"amount\": 1.23}"
+					"raw": "{\"address\": \"addressTo\", \"amount\": 1}"
 				},
 				"description": ""
 			},
