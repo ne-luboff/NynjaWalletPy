@@ -8,7 +8,7 @@
 
 import logging
 import sys
-from blockchain.connect import connect_to_blockchain
+from blockchain.connect import connect_public_network
 from run import start_server
 from environment import env
 from optparse import OptionParser, OptionGroup
@@ -58,14 +58,14 @@ class ApiManager(object):
         """
         Runs server
         """
-        connect_to_blockchain()
+        connect_public_network()
         start_server()
 
     def do_connect(self):
         """
         Connect to blockchain network
         """
-        connect_to_blockchain()
+        connect_public_network()
 
 if __name__ == '__main__':
     ApiManager(sys.argv)

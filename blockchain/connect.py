@@ -17,7 +17,7 @@ ENDPOINT_TEMPLATE = 'https://{0}.infura.io/{1}'
 rinkeby_connection = None
 
 
-def connect_to_blockchain():
+def connect_public_network():
     """
     Connect to blockchain network
     """
@@ -31,5 +31,5 @@ def connect_to_blockchain():
 
 def get_connection():
     if not rinkeby_connection:
-        connect_to_blockchain()
+        connect_public_network()
     return rinkeby_connection

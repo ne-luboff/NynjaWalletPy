@@ -28,6 +28,22 @@ class TransferHandler(BaseHandler):
         """
         Create new transfer
         """
+
+        # TODO add check for address format
+        # HTTPServerRequest(protocol='http', host='18.185.116.64:8000', method='PATCH', uri='/transfer', version='HTTP/1.1', remote_ip='178.95.234.243')
+        # Traceback (most recent call last):
+        #   File "/home/nynja/NynjaWalletPy/.env/lib/python3.5/site-packages/tornado/web.py", line 1590, in _execute
+        #     result = method(*self.path_args, **self.path_kwargs)
+        #   File "/home/nynja/NynjaWalletPy/api/handlers/transfer.py", line 48, in patch
+        #     'to': checksum(required_params['address_to']),
+        #   File "/home/nynja/NynjaWalletPy/blockchain/helpers.py", line 26, in checksum
+        #     adr = Web3.toChecksumAddress(adr)
+        #   File "/home/nynja/NynjaWalletPy/.env/lib/python3.5/site-packages/eth_utils/address.py", line 113, in to_checksum_address
+        #     norm_address = to_normalized_address(address)
+        #   File "/home/nynja/NynjaWalletPy/.env/lib/python3.5/site-packages/eth_utils/address.py", line 68, in to_normalized_address
+        #     "Unknown format {}, attempted to normalize to {}".format(address, hex_address)
+        # ValueError: Unknown format 0x82538f8d2a2fff835ae2b62c46ba0799e261df509643003039ac951b0ffd24a0, attempted to normalize to 0x82538f8d2a2fff835ae2b62c46ba0799e261df509643003039ac951b0ffd24a0
+
         logger.info("WalletTransfer/Patch: {0}".format(self.request_body))
 
         required_param_names = ['address_to', 'amount', 'private_key']
