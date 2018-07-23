@@ -9,6 +9,7 @@
 from mnemonic import Mnemonic
 import os
 from web3 import Web3
+from environment import env
 
 
 def gen_mnemonic_phrase(data=None):
@@ -25,3 +26,7 @@ def checksum(adr):
     if not Web3.isChecksumAddress(adr):
         adr = Web3.toChecksumAddress(adr)
     return adr
+
+
+def get_blockchain_network_type():
+    return env.get('private_blockchain', False)

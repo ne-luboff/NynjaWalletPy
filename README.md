@@ -11,3 +11,5 @@ Server API in https://docs.google.com/document/d/17smSZmScRHWhjHJhi4xsE24IihKyo0
 
 
 Server Postman Collection [available here](https://github.com/ne-luboff/NynjaWalletPy/blob/master/admin/NynjaWalletPy.postman_collection)
+
+NOTE! You should set up ```environment.py``` before server start. Use ```environment.skel.py```

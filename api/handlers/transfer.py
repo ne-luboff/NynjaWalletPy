@@ -9,7 +9,7 @@ import json
 
 import logging
 from base import BaseHandler
-from blockchain.connect import get_connection
+from blockchain.connect import blockchain_connection
 from blockchain.helpers import checksum
 from helpers.http_helper import get_request
 from static_vars.global_string import MISSED_REQUIRED_PARAMS, SMTH_WENT_WRONG
@@ -54,7 +54,7 @@ class TransferHandler(BaseHandler):
         if missed_param_names:
             return self.failure(message=MISSED_REQUIRED_PARAMS.format(', '.join(missed_param_names)))
 
-        w3 = get_connection()
+        w3 = blockchain_connection()
 
         addr_from = Account.privateKeyToAccount(Web3.toBytes(hexstr=required_params['private_key'])).address
 
