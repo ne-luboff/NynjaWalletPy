@@ -112,8 +112,10 @@ class MintHandler(BaseHandler):
                 pass
             return self.failure(message=error_msg)
 
-        response = {
-            'hash_transaction': ask_for_coins_response['message']['tx']
-        }
-
-        return self.success(response)
+        try:
+            response = {
+                'hash_transaction': ask_for_coins_response['message']['tx']
+            }
+            return self.success(response)
+        except Exception:
+            return self.failure(message=ask_for_coins_response['message'])
