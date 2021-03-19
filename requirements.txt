@@ -23,7 +23,7 @@ fake-useragent==0.1.10
 future==0.16.0
 hexbytes==0.1.0
 idna==2.7
-Jinja2==2.10
+Jinja2==2.11.3
 jinja2-time==0.2.0
 lockfile==0.12.2
 lru-dict==1.1.6
